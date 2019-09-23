@@ -1,0 +1,71 @@
+﻿<!-- Matthew Dwyer and William Marciello -->
+    <Window x:Class="BouncingBall.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Bouncing Ball" Height="500" Width="765"
+        Loaded="WindowLoaded"
+        KeyDown="KeypadDown" 
+        KeyUp="KeypadUp" 
+        Closing="OnClosing">
+    <Grid>
+        <Canvas Name="ScoreCanvas" Background="BurlyWood" Height="100" Width="765" VerticalAlignment="Top">
+            <TextBox Name="TimeBox" Height="32" Canvas.Left="107" TextWrapping="Wrap" Text="{Binding Path= Gametimed, UpdateSourceTrigger = PropertyChanged}" Canvas.Top="36" Width="40"/>
+            <TextBox Name="ScoreBox" Height="32" Canvas.Left="269" TextWrapping="Wrap" Text="{Binding Path =Scored, UpdateSourceTrigger =PropertyChanged}" Canvas.Top="36" Width="40"/>
+            <TextBlock TextWrapping="Wrap" Canvas.Left="107" Canvas.Top="20" Text="Time Elapsed"/>
+            <TextBlock TextWrapping="Wrap" Text="Press R to restart, T to reset the bricks, S to start and stop the ball, G to exit." Canvas.Left="410" Canvas.Top="36" Height="32" Width="264"/>
+        </Canvas>
+        <Canvas 
+            Name="BallCanvas"
+            VerticalAlignment="Bottom"
+            Height="368" 
+            Width="765"
+            Background="BlanchedAlmond">
+            <Ellipse 
+                Canvas.Top="{Binding ballCanvasTop}" 
+                Canvas.Left="{Binding ballCanvasLeft}"  
+                Width="{Binding BallWidth}" 
+                Height="{Binding BallHeight}">
+                <Ellipse.Fill>
+                    <RadialGradientBrush GradientOrigin="0.75,0.25">
+                        <GradientStop Color="Yellow" Offset="0.0" />
+                        <GradientStop Color="Orange" Offset="0.5" />
+                        <GradientStop Color="Red" Offset="1.0" />
+                    </RadialGradientBrush>
+                </Ellipse.Fill>
+            </Ellipse>
+            <Rectangle
+                Canvas.Top ="{Binding paddleCanvasTop}"
+                Canvas.Left="{Binding paddleCanvasLeft}"
+                Fill="Black"
+                Height="{Binding paddleHeight}"
+                Width="{Binding paddleWidth}">
+            </Rectangle>
+            <ItemsControl  x:Name="MyItemsControl" Width="330" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,10,0,0">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Canvas>
+                            <Rectangle
+                            
+                            Fill="{Binding BrickFill}"
+                            Stroke="DarkRed"
+                            Height="{Binding BrickHeight}"
+                            Width="{Binding BrickWidth}"
+                            Canvas.Top="{Binding BrickCanvasTop}"
+                            Canvas.Left ="{Binding BrickCanvasLeft}"
+                            Visibility="{Binding BrickVisible}">
+                            </Rectangle>
+                        </Canvas>
+
+                        <!--<Border BorderThickness="1" BorderBrush="Black">
+                        <TextBlock MouseLeftButtonDown="Button_Click" Height="80.0" Width="80.0"
+                        Text="{Binding TileLabel}" Foreground="{Binding TileBrush}" Background="{Binding TileBackground}"
+                        FontSize="60" FontWeight="Bold"
+                        TextAlignment="Center"/>
+                    </Border>-->
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </Canvas>
+        <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="Score" VerticalAlignment="Top" Margin="257,20,0,0"/>
+    </Grid>
+</Window>
